@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D'Lauras Móveis Planejados — Palmas, TO</title>
+  <meta name="description" content="D'Lauras Móveis Planejados — Desde 1995 transformando ambientes com móveis sob medida em Palmas, Tocantins." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: {
+              50:  '#f2f6eb',
+              100: '#e2ecd1',
+              200: '#c4d9a3',
+              300: '#9cbd6e',
+              400: '#7aa348',
+              500: '#44532A',
+              600: '#3a4724',
+              700: '#2e3a1a',
+              800: '#1f2711',
+              900: '#111608',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'serif'],
+            body:    ['Nunito', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * { font-family: 'Nunito', sans-serif; }
+    h1,h2,h3,h4,h5 { font-family: 'Playfair Display', serif; }
+
+    /* Reveal animation */
+    .reveal { opacity:0; transform:translateY(30px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.show { opacity:1; transform:translateY(0); }
+
+    /* Navbar */
+    #topnav {
+      background: rgba(20,28,12,0.0);
+      transition: background .4s, box-shadow .4s;
+    }
+    #topnav.solid {
+      background: rgba(20,28,12,0.97);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Hero */
+    #hero {
+      background: linear-gradient(160deg, #111608 0%, #1f2711 40%, #2e3a1a 75%, #3a4724 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow-1 { position:absolute; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle, rgba(122,163,72,0.18) 0%, transparent 70%); top:-100px; right:-100px; pointer-events:none; }
+    .hero-glow-2 { position:absolute; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle, rgba(68,83,42,0.25) 0%, transparent 70%); bottom:0; left:-80px; pointer-events:none; }
+
+    /* Section alternation */
+    .sec-light  { background-color: #f5f8ee; }
+    .sec-dark   { background-color: #1f2711; }
+    .sec-darker { background-color: #111608; }
+    .sec-mid    { background-color: #2e3a1a; }
+
+    /* Cards */
+    .svc-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(122,163,72,0.15);
+      transition: transform .3s, box-shadow .3s, border-color .3s, background .3s;
+    }
+    .svc-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(68,83,42,0.35);
+      border-color: rgba(122,163,72,0.5);
+      background: rgba(68,83,42,0.2);
+    }
+    .svc-icon {
+      width:56px; height:56px; border-radius:14px;
+      background: rgba(122,163,72,0.15);
+      display:flex; align-items:center; justify-content:center;
+      transition: background .3s;
+    }
+    .svc-card:hover .svc-icon { background: rgba(122,163,72,0.3); }
+
+    /* Portfolio */
+    .port-thumb { overflow:hidden; border-radius:16px; position:relative; cursor:pointer; }
+    .port-thumb img { width:100%; height:100%; object-fit:cover; transition:transform .5s; display:block; }
+    .port-thumb:hover img { transform:scale(1.07); }
+    .port-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(17,22,8,0.88) 0%, transparent 55%); opacity:0; transition:opacity .35s; display:flex; flex-direction:column; justify-content:flex-end; padding:20px; }
+    .port-thumb:hover .port-overlay { opacity:1; }
+
+    /* Testimonials slider */
+    .tslider-track { display:flex; transition:transform .5s cubic-bezier(.4,0,.2,1); }
+    .tslide { min-width:100%; }
+
+    /* Dot */
+    .tdot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.2); transition:background .3s, transform .3s; cursor:pointer; }
+    .tdot.active { background:#7aa348; transform:scale(1.4); }
+
+    /* Filter */
+    .filter-btn { border:1px solid rgba(68,83,42,0.4); color:#44532A; padding:6px 18px; border-radius:999px; font-size:.8rem; font-weight:600; transition:all .25s; cursor:pointer; background:transparent; }
+    .filter-btn.active, .filter-btn:hover { background:#44532A; color:#fff; border-color:#44532A; }
+
+    /* WhatsApp pulse */
+    @keyframes wpulse { 0%{box-shadow:0 0 0 0 rgba(37,211,102,.6)} 70%{box-shadow:0 0 0 14px rgba(37,211,102,0)} 100%{box-shadow:0 0 0 0 rgba(37,211,102,0)} }
+    .wa-btn { animation: wpulse 2.2s infinite; }
+
+    /* Back to top */
+    #btt { opacity:0; pointer-events:none; transition:opacity .3s; }
+    #btt.show { opacity:1; pointer-events:auto; }
+
+    /* Form inputs */
+    .form-input {
+      width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(122,163,72,0.2);
+      border-radius:10px; padding:12px 16px; color:#fff; font-size:.9rem;
+      outline:none; transition:border-color .25s;
+    }
+    .form-input::placeholder { color:rgba(255,255,255,0.3); }
+    .form-input:focus { border-color:#7aa348; }
+    .form-input option { background:#1f2711; color:#fff; }
+
+    /* Divider line */
+    .divider { width:48px; height:3px; background:#44532A; border-radius:2px; }
+
+    /* Team */
+    .team-card { border-radius:20px; overflow:hidden; position:relative; }
+    .team-card .team-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(17,22,8,.85) 0%,transparent 50%); opacity:0; transition:opacity .35s; display:flex; align-items:flex-end; padding:20px; }
+    .team-card:hover .team-overlay { opacity:1; }
+    .team-card img { transition:transform .5s; width:100%; height:100%; object-fit:cover; display:block; }
+    .team-card:hover img { transform:scale(1.05); }
+
+    /* Stat badge */
+    .stat-badge { background:rgba(122,163,72,0.12); border:1px solid rgba(122,163,72,0.25); border-radius:16px; padding:20px; }
+  </style>
+</head>
+<body style="background:#f5f8ee; color:#1a2010;">
+
+<!-- ═══════════ NAVBAR ═══════════ -->
+<header id="topnav" class="fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="#hero" class="flex items-center gap-3">
+      <img src="data:image/jpeg;base64,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" alt="D'Lauras" class="h-10 w-10 rounded-lg object-cover shadow-md" />
+      <div>
+        <div style="font-family:'Playfair Display',serif; font-weight:700; color:#fff; font-size:1.1rem; line-height:1.1;">D'Lauras</div>
+        <div style="font-size:.6rem; color:#9cbd6e; letter-spacing:.25em; text-transform:uppercase;">Móveis Planejados</div>
+      </div>
+    </a>
+
+    <!-- Desktop links -->
+    <nav class="hidden lg:flex items-center gap-7">
+      <a href="#hero"         class="text-white/75 hover:text-forest-300 text-xs font-semibold uppercase tracking-widest transition-colors">Home</a>
+      <a href="#about"        class="text-white/75 hover:text-forest-300 text-xs font-semibold uppercase tracking-widest transition-colors">Quem Somos</a>
+      <a href="#services"     class="text-white/75 hover:text-forest-300 text-xs font-semibold uppercase tracking-widest transition-colors">Serviços</a>
+      <a href="#portfolio"    class="text-white/75 hover:text-forest-300 text-xs font-semibold uppercase tracking-widest transition-colors">Portfólio</a>
+      <a href="#testimonials" class="text-white/75 hover:text-forest-300 text-xs font-semibold uppercase tracking-widest transition-colors">Depoimentos</a>
+      <a href="#team"         class="text-white/75 hover:text-forest-300 text-xs font-semibold uppercase tracking-widest transition-colors">Equipe</a>
+      <a href="#contact" class="bg-forest-500 hover:bg-forest-400 text-white text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full transition-all shadow hover:shadow-lg">
+        Orçamento
+      </a>
+    </nav>
+
+    <!-- Mobile btn -->
+    <button id="mobileBtn" class="lg:hidden text-white p-1">
+      <i data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobileDrop" class="hidden lg:hidden" style="background:rgba(17,22,8,.98); border-top:1px solid rgba(122,163,72,.15);">
+    <div class="px-6 py-5 flex flex-col gap-4">
+      <a href="#hero"         onclick="mclose()" class="text-white/75 hover:text-forest-300 text-sm uppercase tracking-wider">Home</a>
+      <a href="#about"        onclick="mclose()" class="text-white/75 hover:text-forest-300 text-sm uppercase tracking-wider">Quem Somos</a>
+      <a href="#services"     onclick="mclose()" class="text-white/75 hover:text-forest-300 text-sm uppercase tracking-wider">Serviços</a>
+      <a href="#portfolio"    onclick="mclose()" class="text-white/75 hover:text-forest-300 text-sm uppercase tracking-wider">Portfólio</a>
+      <a href="#testimonials" onclick="mclose()" class="text-white/75 hover:text-forest-300 text-sm uppercase tracking-wider">Depoimentos</a>
+      <a href="#team"         onclick="mclose()" class="text-white/75 hover:text-forest-300 text-sm uppercase tracking-wider">Equipe</a>
+      <a href="#contact"      onclick="mclose()" class="bg-forest-500 text-white text-center py-2.5 rounded-full text-sm font-bold mt-1">Solicitar Orçamento</a>
+    </div>
+  </div>
+</header>
+
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero" style="min-height:100vh; display:flex; align-items:center; justify-content:center;">
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+
+  <div class="relative z-10 max-w-5xl mx-auto px-6 py-32 text-center">
+
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full" style="background:rgba(122,163,72,0.15); border:1px solid rgba(122,163,72,0.3);">
+      <div style="width:6px;height:6px;border-radius:50%;background:#7aa348;"></div>
+      <span style="font-size:.72rem; color:#9cbd6e; font-weight:600; letter-spacing:.2em; text-transform:uppercase;">Desde 1995 em Palmas · TO</span>
+    </div>
+
+    <h1 style="font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,6.5rem); font-weight:700; color:#fff; line-height:1.05; margin-bottom:16px;">
+      Bem-Vindo à
+    </h1>
+    <h2 style="font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,6.5rem); font-weight:700; color:#9cbd6e; line-height:1.05; font-style:italic; margin-bottom:24px;">
+      D'Lauras
+    </h2>
+    <p style="font-size:clamp(.9rem,2vw,1.15rem); color:rgba(255,255,255,0.55); font-weight:600; letter-spacing:.3em; text-transform:uppercase; margin-bottom:32px;">
+      Móveis Planejados
+    </p>
+
+    <div style="width:48px; height:2px; background:#44532A; margin:0 auto 28px;"></div>
+
+    <p style="font-size:1.05rem; color:rgba(255,255,255,0.6); max-width:520px; margin:0 auto 40px; line-height:1.8;">
+      Realizando sonhos há quase 30 anos. Ambientes únicos, sob medida, com excelência e exclusividade para a sua família.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#portfolio" style="background:#44532A; color:#fff; padding:14px 36px; border-radius:50px; font-weight:700; font-size:.9rem; text-decoration:none; transition:all .3s; letter-spacing:.05em; display:inline-block;"
+         onmouseover="this.style.background='#3a4724';this.style.transform='scale(1.04)'" onmouseout="this.style.background='#44532A';this.style.transform='scale(1)'">
+        Ver Portfólio
+      </a>
+      <a href="#contact" style="border:1.5px solid rgba(122,163,72,0.6); color:#9cbd6e; padding:14px 36px; border-radius:50px; font-weight:700; font-size:.9rem; text-decoration:none; transition:all .3s; letter-spacing:.05em; display:inline-block;"
+         onmouseover="this.style.background='rgba(68,83,42,0.3)'" onmouseout="this.style.background='transparent'">
+        Solicitar Orçamento
+      </a>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-3 gap-4 max-w-lg mx-auto mt-16 pt-10" style="border-top:1px solid rgba(255,255,255,0.08);">
+      <div class="stat-badge text-center">
+        <div style="font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:700; color:#9cbd6e; line-height:1;">30+</div>
+        <div style="font-size:.65rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:.15em; margin-top:4px;">Anos</div>
+      </div>
+      <div class="stat-badge text-center">
+        <div style="font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:700; color:#9cbd6e; line-height:1;">500+</div>
+        <div style="font-size:.65rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:.15em; margin-top:4px;">Projetos</div>
+      </div>
+      <div class="stat-badge text-center">
+        <div style="font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:700; color:#9cbd6e; line-height:1;">5★</div>
+        <div style="font-size:.65rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:.15em; margin-top:4px;">Google</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- scroll hint -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1" style="animation:bounce 2s infinite; color:rgba(255,255,255,0.3);">
+    <span style="font-size:.6rem; letter-spacing:.2em; text-transform:uppercase;">scroll</span>
+    <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+  </div>
+</section>
+
+
+<!-- ═══════════ SOBRE ═══════════ -->
+<section id="about" class="sec-light py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Visual -->
+      <div class="reveal">
+        <div class="relative">
+          <!-- Main box -->
+          <div style="background:linear-gradient(135deg,#2e3a1a,#44532A); border-radius:24px; aspect-ratio:4/3; display:flex; align-items:flex-end; padding:32px; overflow:hidden; position:relative; box-shadow:0 24px 64px rgba(68,83,42,0.3);">
+            <img src="assets/img/about-img.jpg" alt="D'Lauras Showroom"
+                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:24px;mix-blend-mode:luminosity;opacity:0.5;"
+                 onerror="this.style.display='none'"/>
+            <div style="position:relative;z-index:1;">
+              <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:#fff;line-height:1;">1995</div>
+              <div style="font-size:.7rem;color:#9cbd6e;letter-spacing:.2em;text-transform:uppercase;margin-top:4px;">Fundada em Palmas – TO</div>
+            </div>
+          </div>
+          <!-- Badge flutuante -->
+          <div style="position:absolute;bottom:-20px;right:-20px;background:#44532A;border-radius:18px;padding:20px 24px;text-align:center;box-shadow:0 12px 40px rgba(68,83,42,0.5);">
+            <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fff;line-height:1;">30+</div>
+            <div style="font-size:.6rem;color:rgba(255,255,255,0.7);letter-spacing:.15em;text-transform:uppercase;margin-top:4px;">anos de<br/>experiência</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texto -->
+      <div class="reveal">
+        <p style="font-size:.68rem;color:#44532A;font-weight:700;letter-spacing:.3em;text-transform:uppercase;margin-bottom:12px;">Nossa História</p>
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:700;color:#1a2010;line-height:1.15;margin-bottom:16px;">
+          Quem <span style="color:#44532A;font-style:italic;">Somos?</span>
+        </h2>
+        <div class="divider" style="margin-bottom:24px;"></div>
+
+        <div style="color:#4a5540;line-height:1.85;font-size:.95rem;" class="space-y-4">
+          <p>A <strong style="color:#44532A;">D'Lauras Móveis Planejados</strong> atua desde <strong>1995</strong> no mercado com a missão de proporcionar ambientes personalizados sob medida — com produtos e serviços de qualidade, segurança, honestidade e comprometimento.</p>
+          <p>Desenvolvemos projetos de acordo com seus ambientes, oferecendo o melhor aproveitamento possível e uma excelente experiência estética, com a criação de ambientes únicos e especiais.</p>
+          <p>Nossa sede está na <strong>903 Sul, Alameda 19, QD 14, Palmas – TO</strong>, onde toda a produção acontece e onde recebemos nossos clientes com conforto e atenção personalizada.</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mt-8">
+          <div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:12px 16px;border:1px solid #e0e8cc;">
+            <i data-lucide="badge-check" style="width:18px;height:18px;color:#44532A;flex-shrink:0;"></i>
+            <span style="font-size:.82rem;font-weight:600;color:#2a3520;">Materiais certificados</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:12px 16px;border:1px solid #e0e8cc;">
+            <i data-lucide="ruler" style="width:18px;height:18px;color:#44532A;flex-shrink:0;"></i>
+            <span style="font-size:.82rem;font-weight:600;color:#2a3520;">100% sob medida</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:12px 16px;border:1px solid #e0e8cc;">
+            <i data-lucide="clock" style="width:18px;height:18px;color:#44532A;flex-shrink:0;"></i>
+            <span style="font-size:.82rem;font-weight:600;color:#2a3520;">Prazo garantido</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:12px 16px;border:1px solid #e0e8cc;">
+            <i data-lucide="star" style="width:18px;height:18px;color:#44532A;flex-shrink:0;"></i>
+            <span style="font-size:.82rem;font-weight:600;color:#2a3520;">5 estrelas no Google</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ SERVIÇOS ═══════════ -->
+<section id="services" class="sec-dark py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <p style="font-size:.68rem;color:#7aa348;font-weight:700;letter-spacing:.3em;text-transform:uppercase;margin-bottom:12px;">O que oferecemos</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3rem);font-weight:700;color:#fff;margin-bottom:16px;">
+        Nossos <span style="color:#9cbd6e;font-style:italic;">Serviços</span>
+      </h2>
+      <div style="width:48px;height:3px;background:#44532A;border-radius:2px;margin:0 auto 20px;"></div>
+      <p style="color:rgba(255,255,255,0.5);max-width:580px;margin:0 auto;line-height:1.8;font-size:.92rem;">
+        Produzimos móveis personalizados para variados tipos de desejos e necessidades. Nossa fabricação potencializa o aproveitamento dos espaços de forma primorosa e elegante, sem abrir mão da praticidade.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- card macro -->
+      <div class="svc-card reveal rounded-2xl p-7">
+        <div class="svc-icon mb-5"><i data-lucide="utensils" style="width:26px;height:26px;color:#9cbd6e;"></i></div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;margin-bottom:8px;">Cozinhas Planejadas</h3>
+        <p style="color:rgba(255,255,255,0.45);font-size:.85rem;line-height:1.75;">Armários e módulos sob medida que maximizam espaço e conferem elegância ao coração da sua casa.</p>
+      </div>
+      <div class="svc-card reveal rounded-2xl p-7">
+        <div class="svc-icon mb-5"><i data-lucide="bed-double" style="width:26px;height:26px;color:#9cbd6e;"></i></div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;margin-bottom:8px;">Quartos & Closets</h3>
+        <p style="color:rgba(255,255,255,0.45);font-size:.85rem;line-height:1.75;">Guarda-roupas, cabeceiras, criados-mudos e closets projetados para o seu estilo de vida.</p>
+      </div>
+      <div class="svc-card reveal rounded-2xl p-7">
+        <div class="svc-icon mb-5"><i data-lucide="tv-2" style="width:26px;height:26px;color:#9cbd6e;"></i></div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;margin-bottom:8px;">Painéis & Home Theater</h3>
+        <p style="color:rgba(255,255,255,0.45);font-size:.85rem;line-height:1.75;">Painéis para TV, estantes e racks com design contemporâneo para valorizar sua sala.</p>
+      </div>
+      <div class="svc-card reveal rounded-2xl p-7">
+        <div class="svc-icon mb-5"><i data-lucide="monitor" style="width:26px;height:26px;color:#9cbd6e;"></i></div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;margin-bottom:8px;">Home Office</h3>
+        <p style="color:rgba(255,255,255,0.45);font-size:.85rem;line-height:1.75;">Bancadas, estantes e móveis de escritório que unem produtividade e organização.</p>
+      </div>
+      <div class="svc-card reveal rounded-2xl p-7">
+        <div class="svc-icon mb-5"><i data-lucide="bath" style="width:26px;height:26px;color:#9cbd6e;"></i></div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;margin-bottom:8px;">Banheiros</h3>
+        <p style="color:rgba(255,255,255,0.45);font-size:.85rem;line-height:1.75;">Armários e gabinetes com acabamento sofisticado e resistência à umidade.</p>
+      </div>
+      <div class="svc-card reveal rounded-2xl p-7">
+        <div class="svc-icon mb-5"><i data-lucide="store" style="width:26px;height:26px;color:#9cbd6e;"></i></div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;margin-bottom:8px;">Balcões & Portas</h3>
+        <p style="color:rgba(255,255,255,0.45);font-size:.85rem;line-height:1.75;">Balcões de atendimento, portas e divisórias para ambientes comerciais.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ PORTFOLIO ═══════════ -->
+<section id="portfolio" class="sec-light py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <p style="font-size:.68rem;color:#44532A;font-weight:700;letter-spacing:.3em;text-transform:uppercase;margin-bottom:12px;">Nossos Trabalhos</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3rem);font-weight:700;color:#1a2010;margin-bottom:16px;">
+        Port<span style="color:#44532A;font-style:italic;">fólio</span>
+      </h2>
+      <div style="width:48px;height:3px;background:#44532A;border-radius:2px;margin:0 auto 20px;"></div>
+      <p style="color:#6b7c5a;max-width:560px;margin:0 auto;line-height:1.8;font-size:.92rem;">
+        Conheça alguns dos projetos entregues com qualidade, dedicação e o padrão D'Lauras de excelência.
+      </p>
+    </div>
+
+    <!-- Filter -->
+    <div class="flex flex-wrap justify-center gap-2 mb-10 reveal" id="filterRow">
+      <button class="filter-btn active" data-f="all">Todos</button>
+      <button class="filter-btn" data-f="cozinha">Cozinha</button>
+      <button class="filter-btn" data-f="quarto">Quarto</button>
+      <button class="filter-btn" data-f="sala">Sala</button>
+      <button class="filter-btn" data-f="escritorio">Escritório</button>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="pGrid">
+
+      <div class="port-thumb reveal" data-pc="cozinha" style="aspect-ratio:4/3; background:linear-gradient(135deg,#2e3a1a,#44532A);">
+        <img src="assets/img/portfolio/portfolio-1.jpg" alt="Cozinha" onerror="this.style.display='none'"/>
+        <div class="port-overlay">
+          <div>
+            <p style="font-size:.65rem;color:#9cbd6e;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;">Cozinha</p>
+            <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.15rem;font-weight:600;">Cozinha Moderna</h4>
+          </div>
+        </div>
+        <span style="position:absolute;top:12px;left:12px;background:rgba(68,83,42,0.85);color:#fff;font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:50px;letter-spacing:.1em;text-transform:uppercase;">Cozinha</span>
+      </div>
+
+      <div class="port-thumb reveal" data-pc="quarto" style="aspect-ratio:4/3; background:linear-gradient(135deg,#3a3a2a,#1a2010);">
+        <img src="assets/img/portfolio/portfolio-2.jpg" alt="Quarto" onerror="this.style.display='none'"/>
+        <div class="port-overlay">
+          <div>
+            <p style="font-size:.65rem;color:#9cbd6e;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;">Quarto</p>
+            <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.15rem;font-weight:600;">Quarto Casal</h4>
+          </div>
+        </div>
+        <span style="position:absolute;top:12px;left:12px;background:rgba(68,83,42,0.85);color:#fff;font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:50px;letter-spacing:.1em;text-transform:uppercase;">Quarto</span>
+      </div>
+
+      <div class="port-thumb reveal" data-pc="sala" style="aspect-ratio:4/3; background:linear-gradient(135deg,#44532A,#2e3a1a);">
+        <img src="assets/img/portfolio/portfolio-3.jpg" alt="Sala" onerror="this.style.display='none'"/>
+        <div class="port-overlay">
+          <div>
+            <p style="font-size:.65rem;color:#9cbd6e;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;">Sala</p>
+            <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.15rem;font-weight:600;">Sala Integrada</h4>
+          </div>
+        </div>
+        <span style="position:absolute;top:12px;left:12px;background:rgba(68,83,42,0.85);color:#fff;font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:50px;letter-spacing:.1em;text-transform:uppercase;">Sala</span>
+      </div>
+
+      <div class="port-thumb reveal" data-pc="quarto" style="aspect-ratio:4/3; background:linear-gradient(135deg,#1f2711,#44532A);">
+        <img src="assets/img/portfolio/portfolio-4.jpg" alt="Closet" onerror="this.style.display='none'"/>
+        <div class="port-overlay">
+          <div>
+            <p style="font-size:.65rem;color:#9cbd6e;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;">Quarto</p>
+            <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.15rem;font-weight:600;">Closet Luxo</h4>
+          </div>
+        </div>
+        <span style="position:absolute;top:12px;left:12px;background:rgba(68,83,42,0.85);color:#fff;font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:50px;letter-spacing:.1em;text-transform:uppercase;">Quarto</span>
+      </div>
+
+      <div class="port-thumb reveal" data-pc="escritorio" style="aspect-ratio:4/3; background:linear-gradient(135deg,#2a2a1a,#44532A);">
+        <img src="assets/img/portfolio/portfolio-5.jpg" alt="Home Office" onerror="this.style.display='none'"/>
+        <div class="port-overlay">
+          <div>
+            <p style="font-size:.65rem;color:#9cbd6e;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;">Escritório</p>
+            <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.15rem;font-weight:600;">Home Office</h4>
+          </div>
+        </div>
+        <span style="position:absolute;top:12px;left:12px;background:rgba(68,83,42,0.85);color:#fff;font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:50px;letter-spacing:.1em;text-transform:uppercase;">Escritório</span>
+      </div>
+
+      <div class="port-thumb reveal" data-pc="cozinha" style="aspect-ratio:4/3; background:linear-gradient(135deg,#44532A,#1a2010);">
+        <img src="assets/img/portfolio/portfolio-6.jpg" alt="Cozinha Rústica" onerror="this.style.display='none'"/>
+        <div class="port-overlay">
+          <div>
+            <p style="font-size:.65rem;color:#9cbd6e;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;">Cozinha</p>
+            <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.15rem;font-weight:600;">Cozinha Rústica</h4>
+          </div>
+        </div>
+        <span style="position:absolute;top:12px;left:12px;background:rgba(68,83,42,0.85);color:#fff;font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:50px;letter-spacing:.1em;text-transform:uppercase;">Cozinha</span>
+      </div>
+
+      <div class="port-thumb reveal" data-pc="sala" style="aspect-ratio:4/3; background:linear-gradient(135deg,#1f2711,#3a4724);">
+        <img src="assets/img/portfolio/portfolio-7.jpg" alt="Painel TV" onerror="this.style.display='none'"/>
+        <div class="port-overlay">
+          <div>
+            <p style="font-size:.65rem;color:#9cbd6e;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;">Sala</p>
+            <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.15rem;font-weight:600;">Painel TV</h4>
+          </div>
+        </div>
+        <span style="position:absolute;top:12px;left:12px;background:rgba(68,83,42,0.85);color:#fff;font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:50px;letter-spacing:.1em;text-transform:uppercase;">Sala</span>
+      </div>
+
+      <div class="port-thumb reveal" data-pc="escritorio" style="aspect-ratio:4/3; background:linear-gradient(135deg,#111608,#2e3a1a);">
+        <img src="assets/img/portfolio/portfolio-8.jpg" alt="Escritório Corp" onerror="this.style.display='none'"/>
+        <div class="port-overlay">
+          <div>
+            <p style="font-size:.65rem;color:#9cbd6e;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;">Escritório</p>
+            <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.15rem;font-weight:600;">Escritório Corp.</h4>
+          </div>
+        </div>
+        <span style="position:absolute;top:12px;left:12px;background:rgba(68,83,42,0.85);color:#fff;font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:50px;letter-spacing:.1em;text-transform:uppercase;">Escritório</span>
+      </div>
+
+      <div class="port-thumb reveal" data-pc="quarto" style="aspect-ratio:4/3; background:linear-gradient(135deg,#44532A,#3a3a2a);">
+        <img src="assets/img/portfolio/portfolio-9.jpg" alt="Quarto Infantil" onerror="this.style.display='none'"/>
+        <div class="port-overlay">
+          <div>
+            <p style="font-size:.65rem;color:#9cbd6e;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;">Quarto</p>
+            <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.15rem;font-weight:600;">Quarto Infantil</h4>
+          </div>
+        </div>
+        <span style="position:absolute;top:12px;left:12px;background:rgba(68,83,42,0.85);color:#fff;font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:50px;letter-spacing:.1em;text-transform:uppercase;">Quarto</span>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-12 reveal">
+      <a href="#contact" style="border:1.5px solid #44532A;color:#44532A;padding:12px 32px;border-radius:50px;font-weight:700;font-size:.85rem;text-decoration:none;display:inline-block;transition:all .3s;"
+         onmouseover="this.style.background='#44532A';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#44532A'">
+        Quero um projeto assim →
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ DEPOIMENTOS ═══════════ -->
+<section id="testimonials" class="sec-mid py-24" style="overflow:hidden;">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <p style="font-size:.68rem;color:#9cbd6e;font-weight:700;letter-spacing:.3em;text-transform:uppercase;margin-bottom:12px;">O que dizem</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3rem);font-weight:700;color:#fff;margin-bottom:16px;">
+        Depo<span style="color:#9cbd6e;font-style:italic;">imentos</span>
+      </h2>
+      <div style="width:48px;height:3px;background:#44532A;border-radius:2px;margin:0 auto 16px;"></div>
+      <p style="font-size:.85rem;color:rgba(255,255,255,0.45);max-width:450px;margin:0 auto;">
+        Quase 30 anos de histórias — além de clientes, fizemos muitos amigos.
+        <a href="https://www.google.com/search?q=D'Lauras+Móveis+Planejados" target="_blank" style="color:#9cbd6e;text-decoration:underline;margin-left:4px;">Deixe o seu!</a>
+      </p>
+    </div>
+
+    <div class="reveal" style="overflow:hidden;">
+      <div class="tslider-track" id="tTrack">
+
+        <div class="tslide px-2">
+          <div style="max-width:640px;margin:0 auto;background:rgba(255,255,255,0.05);border:1px solid rgba(122,163,72,0.2);border-radius:24px;padding:40px;text-align:center;">
+            <div style="font-family:'Playfair Display',serif;font-size:4rem;color:rgba(156,189,110,0.3);line-height:.8;margin-bottom:16px;">&ldquo;</div>
+            <p style="font-family:'Playfair Display',serif;font-style:italic;color:rgba(255,255,255,0.8);font-size:1.05rem;line-height:1.85;margin-bottom:24px;">
+              A D'Lauras transformou completamente minha cozinha. O atendimento foi impecável do início ao fim e o resultado superou todas as minhas expectativas.
+            </p>
+            <div style="color:#9cbd6e;font-size:1rem;margin-bottom:12px;">★★★★★</div>
+            <div style="font-weight:700;color:#fff;font-size:.9rem;">Ana Paula S.</div>
+            <div style="font-size:.75rem;color:rgba(255,255,255,0.35);margin-top:2px;">Palmas – TO</div>
+          </div>
+        </div>
+
+        <div class="tslide px-2">
+          <div style="max-width:640px;margin:0 auto;background:rgba(255,255,255,0.05);border:1px solid rgba(122,163,72,0.2);border-radius:24px;padding:40px;text-align:center;">
+            <div style="font-family:'Playfair Display',serif;font-size:4rem;color:rgba(156,189,110,0.3);line-height:.8;margin-bottom:16px;">&ldquo;</div>
+            <p style="font-family:'Playfair Display',serif;font-style:italic;color:rgba(255,255,255,0.8);font-size:1.05rem;line-height:1.85;margin-bottom:24px;">
+              Contratei para o quarto do casal e o home office. Qualidade excepcional, prazo cumprido e preço justo. Super recomendo a D'Lauras para todos!
+            </p>
+            <div style="color:#9cbd6e;font-size:1rem;margin-bottom:12px;">★★★★★</div>
+            <div style="font-weight:700;color:#fff;font-size:.9rem;">Carlos Mendes</div>
+            <div style="font-size:.75rem;color:rgba(255,255,255,0.35);margin-top:2px;">Palmas – TO</div>
+          </div>
+        </div>
+
+        <div class="tslide px-2">
+          <div style="max-width:640px;margin:0 auto;background:rgba(255,255,255,0.05);border:1px solid rgba(122,163,72,0.2);border-radius:24px;padding:40px;text-align:center;">
+            <div style="font-family:'Playfair Display',serif;font-size:4rem;color:rgba(156,189,110,0.3);line-height:.8;margin-bottom:16px;">&ldquo;</div>
+            <p style="font-family:'Playfair Display',serif;font-style:italic;color:rgba(255,255,255,0.8);font-size:1.05rem;line-height:1.85;margin-bottom:24px;">
+              Profissionais sérios e dedicados. A sala planejada ficou exatamente como eu sonhei. Já indiquei para toda a família!
+            </p>
+            <div style="color:#9cbd6e;font-size:1rem;margin-bottom:12px;">★★★★★</div>
+            <div style="font-weight:700;color:#fff;font-size:.9rem;">Fernanda Lima</div>
+            <div style="font-size:.75rem;color:rgba(255,255,255,0.35);margin-top:2px;">Palmas – TO</div>
+          </div>
+        </div>
+
+        <div class="tslide px-2">
+          <div style="max-width:640px;margin:0 auto;background:rgba(255,255,255,0.05);border:1px solid rgba(122,163,72,0.2);border-radius:24px;padding:40px;text-align:center;">
+            <div style="font-family:'Playfair Display',serif;font-size:4rem;color:rgba(156,189,110,0.3);line-height:.8;margin-bottom:16px;">&ldquo;</div>
+            <p style="font-family:'Playfair Display',serif;font-style:italic;color:rgba(255,255,255,0.8);font-size:1.05rem;line-height:1.85;margin-bottom:24px;">
+              Móveis de altíssima qualidade e entrega no prazo. A equipe é muito atenciosa e o resultado ficou incrível. Com certeza vou contratar novamente!
+            </p>
+            <div style="color:#9cbd6e;font-size:1rem;margin-bottom:12px;">★★★★★</div>
+            <div style="font-weight:700;color:#fff;font-size:.9rem;">Ricardo Souza</div>
+            <div style="font-size:.75rem;color:rgba(255,255,255,0.35);margin-top:2px;">Palmas – TO</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="flex items-center justify-center gap-5 mt-8">
+        <button id="tPrev" style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(122,163,72,0.4);color:#9cbd6e;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;"
+                onmouseover="this.style.background='#44532A'" onmouseout="this.style.background='transparent'">
+          <i data-lucide="chevron-left" style="width:18px;height:18px;"></i>
+        </button>
+        <div id="tDots" class="flex gap-2"></div>
+        <button id="tNext" style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(122,163,72,0.4);color:#9cbd6e;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;"
+                onmouseover="this.style.background='#44532A'" onmouseout="this.style.background='transparent'">
+          <i data-lucide="chevron-right" style="width:18px;height:18px;"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ EQUIPE ═══════════ -->
+<section id="team" class="sec-light py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <p style="font-size:.68rem;color:#44532A;font-weight:700;letter-spacing:.3em;text-transform:uppercase;margin-bottom:12px;">As pessoas por trás</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3rem);font-weight:700;color:#1a2010;margin-bottom:16px;">
+        Nossa <span style="color:#44532A;font-style:italic;">Equipe</span>
+      </h2>
+      <div style="width:48px;height:3px;background:#44532A;border-radius:2px;margin:0 auto;"></div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <div class="team-card reveal" style="aspect-ratio:3/4; background:linear-gradient(135deg,#2e3a1a,#44532A);">
+        <img src="assets/img/team/team-1.jpg" alt="Laura" onerror="this.style.display='none'"/>
+        <div class="team-overlay">
+          <div>
+            <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.05rem;font-weight:700;">Laura Oliveira</h4>
+            <span style="font-size:.7rem;color:#9cbd6e;">CEO & Fundadora</span>
+            <div class="flex gap-2 mt-3">
+              <a href="#" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;"><i data-lucide="instagram" style="width:13px;height:13px;color:#fff;"></i></a>
+              <a href="#" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;"><i data-lucide="facebook" style="width:13px;height:13px;color:#fff;"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card reveal" style="aspect-ratio:3/4; background:linear-gradient(135deg,#1a2010,#2e3a1a);">
+        <img src="assets/img/team/team-2.jpg" alt="Marcos" onerror="this.style.display='none'"/>
+        <div class="team-overlay">
+          <div>
+            <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.05rem;font-weight:700;">Marcos Silva</h4>
+            <span style="font-size:.7rem;color:#9cbd6e;">Designer de Interiores</span>
+            <div class="flex gap-2 mt-3">
+              <a href="#" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;"><i data-lucide="instagram" style="width:13px;height:13px;color:#fff;"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card reveal" style="aspect-ratio:3/4; background:linear-gradient(135deg,#44532A,#1f2711);">
+        <img src="assets/img/team/team-3.jpg" alt="Ana" onerror="this.style.display='none'"/>
+        <div class="team-overlay">
+          <div>
+            <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.05rem;font-weight:700;">Ana Costa</h4>
+            <span style="font-size:.7rem;color:#9cbd6e;">Gerente Comercial</span>
+            <div class="flex gap-2 mt-3">
+              <a href="#" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;"><i data-lucide="instagram" style="width:13px;height:13px;color:#fff;"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card reveal" style="aspect-ratio:3/4; background:linear-gradient(135deg,#2a3018,#44532A);">
+        <img src="assets/img/team/team-4.jpg" alt="Roberto" onerror="this.style.display='none'"/>
+        <div class="team-overlay">
+          <div>
+            <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.05rem;font-weight:700;">Roberto Ferreira</h4>
+            <span style="font-size:.7rem;color:#9cbd6e;">Mestre Marceneiro</span>
+            <div class="flex gap-2 mt-3">
+              <a href="#" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;"><i data-lucide="instagram" style="width:13px;height:13px;color:#fff;"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ CONTATO ═══════════ -->
+<section id="contact" class="sec-darker py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <p style="font-size:.68rem;color:#7aa348;font-weight:700;letter-spacing:.3em;text-transform:uppercase;margin-bottom:12px;">Fale Conosco</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3rem);font-weight:700;color:#fff;margin-bottom:16px;">
+        Solicite seu <span style="color:#9cbd6e;font-style:italic;">Orçamento Grátis</span>
+      </h2>
+      <div style="width:48px;height:3px;background:#44532A;border-radius:2px;margin:0 auto;"></div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12 items-start">
+
+      <!-- Infos -->
+      <div class="reveal space-y-4">
+
+        <div style="display:flex;align-items:flex-start;gap:16px;background:rgba(255,255,255,0.04);border:1px solid rgba(122,163,72,0.15);border-radius:16px;padding:20px;">
+          <div style="width:44px;height:44px;background:rgba(68,83,42,0.35);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i data-lucide="map-pin" style="width:20px;height:20px;color:#9cbd6e;"></i>
+          </div>
+          <div>
+            <div style="font-size:.65rem;color:rgba(255,255,255,0.35);letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;">Endereço</div>
+            <div style="color:#fff;font-weight:600;font-size:.92rem;">QUADRA 903 Sul, Alameda 19, QD 14</div>
+            <div style="color:rgba(255,255,255,0.45);font-size:.8rem;">Palmas – TO, 77017-278</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:16px;background:rgba(255,255,255,0.04);border:1px solid rgba(122,163,72,0.15);border-radius:16px;padding:20px;">
+          <div style="width:44px;height:44px;background:rgba(68,83,42,0.35);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i data-lucide="phone" style="width:20px;height:20px;color:#9cbd6e;"></i>
+          </div>
+          <div>
+            <div style="font-size:.65rem;color:rgba(255,255,255,0.35);letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;">Telefone / WhatsApp</div>
+            <a href="https://wa.me/556392117264" style="color:#fff;font-weight:600;font-size:.92rem;text-decoration:none;">(63) 9 9211-7264</a>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:16px;background:rgba(255,255,255,0.04);border:1px solid rgba(122,163,72,0.15);border-radius:16px;padding:20px;">
+          <div style="width:44px;height:44px;background:rgba(68,83,42,0.35);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i data-lucide="mail" style="width:20px;height:20px;color:#9cbd6e;"></i>
+          </div>
+          <div>
+            <div style="font-size:.65rem;color:rgba(255,255,255,0.35);letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;">E-mail</div>
+            <a href="mailto:contato@dlaurasmoveis.com.br" style="color:#fff;font-weight:600;font-size:.92rem;text-decoration:none;">contato@dlaurasmoveis.com.br</a>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:16px;background:rgba(255,255,255,0.04);border:1px solid rgba(122,163,72,0.15);border-radius:16px;padding:20px;">
+          <div style="width:44px;height:44px;background:rgba(68,83,42,0.35);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i data-lucide="clock" style="width:20px;height:20px;color:#9cbd6e;"></i>
+          </div>
+          <div>
+            <div style="font-size:.65rem;color:rgba(255,255,255,0.35);letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px;">Horário</div>
+            <div style="color:#fff;font-weight:600;font-size:.92rem;">Segunda a Sexta: 8h – 18h</div>
+            <div style="color:rgba(255,255,255,0.45);font-size:.8rem;">Sábado: 8h – 12h</div>
+          </div>
+        </div>
+
+        <!-- Mapa -->
+        <div style="border-radius:16px;overflow:hidden;height:200px;">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1963.125776057772!2d-48.3386098!3d-10.2412846!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xc661c1dddd9a25bd!2sD'Lauras%20M%C3%B3veis%20Planejados!5e0!3m2!1spt-BR!2sbr!4v1637941550446!5m2!1spt-BR!2sbr"
+            width="100%" height="100%" style="border:0;filter:saturate(.7) hue-rotate(90deg) brightness(.8);" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <!-- Formulário -->
+      <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(122,163,72,0.15);border-radius:24px;padding:32px;">
+        <div id="fSuccess" style="display:none;background:rgba(68,83,42,0.4);border:1px solid rgba(122,163,72,0.5);border-radius:12px;padding:14px;text-align:center;color:#9cbd6e;font-weight:600;margin-bottom:20px;">
+          ✅ Mensagem enviada com sucesso! Em breve entraremos em contato.
+        </div>
+        <form action="envia_mensagem.asp" method="post" id="cForm">
+          <div class="grid sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label style="display:block;font-size:.65rem;color:rgba(255,255,255,0.4);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;">Nome *</label>
+              <input type="text" name="nome" placeholder="Seu nome" required class="form-input"/>
+            </div>
+            <div>
+              <label style="display:block;font-size:.65rem;color:rgba(255,255,255,0.4);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;">E-mail *</label>
+              <input type="email" name="email" placeholder="seu@email.com" required class="form-input"/>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label style="display:block;font-size:.65rem;color:rgba(255,255,255,0.4);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;">Telefone *</label>
+              <input type="tel" name="Telefone" placeholder="(63) 9 0000-0000" required class="form-input"/>
+            </div>
+            <div>
+              <label style="display:block;font-size:.65rem;color:rgba(255,255,255,0.4);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;">Ambiente</label>
+              <select name="assunto" class="form-input">
+                <option value="">Selecione...</option>
+                <option>Cozinha</option>
+                <option>Quarto / Closet</option>
+                <option>Sala</option>
+                <option>Banheiro</option>
+                <option>Home Office</option>
+                <option>Ambiente completo</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-5">
+            <label style="display:block;font-size:.65rem;color:rgba(255,255,255,0.4);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;">Mensagem *</label>
+            <textarea name="mensagem" rows="5" placeholder="Conte sobre seu projeto..." required class="form-input" style="resize:none;"></textarea>
+          </div>
+          <button type="submit" style="width:100%;background:#44532A;color:#fff;padding:14px;border-radius:12px;font-weight:700;font-size:.95rem;border:none;cursor:pointer;letter-spacing:.05em;transition:all .3s;"
+                  onmouseover="this.style.background='#3a4724'" onmouseout="this.style.background='#44532A'">
+            Enviar Mensagem →
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer style="background:#0d1108;border-top:1px solid rgba(122,163,72,0.12);">
+  <div class="max-w-7xl mx-auto px-6 py-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+
+    <div class="lg:col-span-2">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/7QCEUGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAGgcAigAYkZCTUQwYTAwMGFiNDAxMDAwMGNhMDIwMDAwMGEwNDAwMDAxNjA0MDAwMDcyMDQwMDAwYjEwNjAwMDA0MzA5MDAwMGI5MDkwMDAwZDQwOTAwMDA0YjBhMDAwMDNmMGQwMDAwAP/bAIQABQYGCwgLCwsLCw0LCwsNDg4NDQ4ODw0ODg4NDxAQEBEREBAQEA8TEhMPEBETFBQTERMWFhYTFhUVFhkWGRYWEgEFBQUKBwoICQkICwgKCAsKCgkJCgoMCQoJCgkMDQsKCwsKCw0MCwsICwsMDAwNDQwMDQoLCg0MDQ0MExQTExOc/8IAEQgAlgCWAwEiAAIRAQMRAf/EAH8AAQEAAwEBAQAAAAAAAAAAAAAGAQIFBAMHEAABAgMEBwIJDAMAAAAAAAABAAIDBBESEyExEDAyQVFhcSKBFCAjM1BSkdHhBTRAQmBicnOhscHxgpLSEQEAAQMCBAYDAQEBAAAAAAABEQAhMUFRYXGBkRAwobHB8CDR8eFQYP/aAAwDAQACAAMAAAABkx4PmAAAAAAAArJOsJMAAD7LLbM3y6zTLn8ek6REM40wAArJOsJMAAFF8uFZ75m77T86yVFRHHN5ppgMAFZJ1hJgAA77j12+Zy5nd8pmo8XUJrn7a6AxgBWSdYSecVecyqt++yLxXyGD7+ztnI5FxDnd4lL1coRQfbCZxY+UmcVc1h8ayTrMYk6yTodsz9dp5MupF9/o5beHHoLH8i7XXPZyfh5zm3n59XYdHi552XW8vtmjy1knWfPEmAB3OHnOe7ng5y6ns4Op2fpwfqdvzckYwa4AVknWEmAAAAAAAABWSdYSYAAAAAAAAFZJ1hJqwSasEmrBJqwSasEmrBJqwSasEmrBJ1gf/9oACAEBAAEFAvRrGF5mJZ8AqDJxIzdcxheXOEkJaZD1DkfKxp5xc9jZxutkZkQHTcsYRgQTFdbEWK5paZKDYUzGvn62QMekxfhja1bfkTxjWtbJSt+6amrxS8d0F102DFe8vMpHvFMQbl+sY8sL2CcErLAKHPeVjyTmOc4SY1zHlhmZp8cqBOxILdTINbTwyCrqE8PhMMuoBhBB0q9QpMMeo0EXUSHLyqjxYD2tjwGgwYUwyWl2WPCJdPpXRI+bXydgB8yUrDhCBFjwXNd55fU+VPPszmnwID5SI17oM41sMTEAn5QhthxdEnMMhK8lVMTltsrOXKvZRQZtrCIssxeGPvTHlnF83eRZyMI0RGahRhEm2BkB8IJsxLwlFiGI7xjLBGWXgtF4P2hKVTZaqErVNlUZfDWhxCrotnRX7S//2gAIAQMAAT8B+0n/2gAIAQIAAT8B1oHsVOCpw/vUDHBbKpTHUDKgz/dDDPuQwz7/ABQKqzzRFEBzRHFWTxy/lU5qyiOehqGG9HGmKrzHNE2t9E44exNOarz9yJw3Hp4vcu5YcF3egv/aAAgBAQAGPwL0aABUlUd3Hdoc5owH69NeABUlWW4xztO9VXUbFjsjvaU5jzRsPFx5fFNu+wxmyPerbMIw22etzGuxGDsK7x0Va2mOxD+PxQa3+lMQwdplkcy1UOBCv3mwxuXF3JF9KV1xsgGHvt7KNgQw3fdZoUz3UQvGwa7re0vK/wCNNnu12JwbieJ6Ky0WYbcA33oOb38wo8QDYZaaOblVxqSriIC5rtni0osrWmtDmmhCtswjDab63MK9i9mG32uPBPc8diJg4ctyFjttfsEb1ZbjGO071eQ14c00IVXbshu0FrTgf06aqK5zA+w2tCvmzfb8FfQ24MPlIZ4ckYgbQ3mHSuWg3gceACpYfD+9WqjMeLVmHVvv0QC0dp9a80GvaYsTfwXYhljuuCHkLR3ku3pzoQLHsFS3MEIxYtbANABvK+b4fixRs5Vw6aZj8v36IzjsiGQV0f8AzodEey2Q6mfRENgWXbjXJRBv8H0SX4v5T+79kOoVi4B7+KjFrLsXWSEN0O2K1zogPBhj95FrRQUGl4eCQ8UwXmn/AO3xVhjbuHw49UWlttjs2rzT+lfingsrCifV4KrYb3Hg44K9+t+lOCtGE61wB7KY84NaRQDcAnPGRpn00C+Y60BS03eiyCyyHbRO0UbxhdwINKK0yG5zt1o4BFzsz49LWNXDL1RXis+tRwzd0W1u4dEW47NrLH2ICvf7KYd6HaxwJw419ypXf/z70cccMaYbVPbyRNTlWlKHv+g55faf/9oACAEBAQE/If8AmpWVAFGzySGW8ctfCcD6rbc/ykjzkrKgCk6BdwLocf66FEXmXcvWdp7cqxYXG5kcnzXDRf33TtTowv0Gf43hUjzXLMUj3/kV1ZVXXu/TReSqS7NVpPKSXYsnr6UyPARslZR0Ky7OD6+tWW7R7u7u+cgtLtXWNecVxZnd+3amEnebk6RxooIjs9USUwBjZocn984lICgMWw+dKdnCd41G/tzpiIuQ01BqBi1oAX5PWkjMxaiCGuL744e3KnSG8fOzuea/BUiUnALOmfc/jopmY2HA0HP9b0DajrIx7D5oR5krtHjH7p+4fcC+p/XQpZu3XPnPwVIlCrALOG7zfDZGE3nq/XGlW7dfJbGhPAnwkZ0JFXcttf1RWkYtTFlGPBhE2mxLrLTY5FiyOd32oyU5vbmoqHkcLVTBVlADdAnqfLSC6yG6Guu3CiiURJEwvBfWpRaC8gfvKpnbkVU1usP671LESaDk0T+JA9LQK4Pu9CV1ez9+GAeaRZs1jWpYwauVKdgEbsv7opsDm+OCa9B7dETcM3KSaRWUGbPlQhhYhkmW+Co+8r8z0rOABnqxtRsjsm6X8QCfxgWvOpv4awRQZjlbqohWXe5TludCsgxXnfZDwp8IbgIunOjKl2Oh0R+6hnK7eHue1OD4lSmDF6OlLDBsDj4asjEsNxaRZmOR24FRGai5N22aShzRSb5fal2lZfux+YVD1CJMiXRDtR6IicBR2r4CJvekbkyy2UkN8/5WqQFZJATYOvOpAqVZhu3pWjKJvQxGCZYBVmbvRmgRuJYuWhIoZ0/wUCtDBnUm8B5moy2BJEOZg5EsXjy5qal3qQRZRF4Oalu1NKgKiUdc1NS3b/8Apf/aAAwDAQACAQMBAAAQ/wD/AP8A/wD/AP8A/r//AP8ArT7/AP8A6/8A/wDf3Td//r//AP8Ao+3T/wDruAUs+CIaerqapHThm3pr/wD/ABihzR/+v/8A/wD/AP8A/wD/AOv/AP8A/wD/AP8A/wD+vPPPPPPPPOP/2gAIAQMAAT8Q1tNFNTksvoFPEou9U0hZekf/2gAIAQIBAT8Q82e7YZfg40zjQ+lRcrn1Hkfq/dq29/8AK452tHeln87qBi4uiipcDu/c0/hMjFXYD3qy1kmpdA02cmfStyyFI7ed/wBVO2L3nSDNQaHl4OG9s+1AvgxgPuK4Jb8AgljAbZ/KQHKakpJ4C3/Cf//aAAgBAQEBPxD/AJuuGUy/rdwF2jA7w7JWurDrhPCIMbTaPO0HTmaRIiIwjZEyJv52umUy/rVWwXfDrbHYNUy9Ldi9S+iUtyEK3or0KXQ7K40tjVo7y1OJAGBWARIiIwjZEyJv5tu2OWdzbuWdIY315fSnqNhukCMS3WgH6rroHtFz9SlFuy4KaCulciuuJ6NxAQ3bbLC6vnEwYbFuPkG9O0q2hrt2ZpaSM1n0L3YrNzpQSGRPqo5z5y4n3PUK+vuJTQLRfZdH3Gncw4yrDDbGzUkbsYxwSjPCm7Z+DYLFFEyuClcx+ripCNz5G5DZ5Hm6gBTD8jhGyWagvkeBWBcPKiu9lXiF9+oTsm/7Wa3OFT3N2BdJgGTiOaIOHzohB2ooVLKrdVyq+TH46gBTD8jhGyWad0hJIux3F5Y8LJh3j9Gppid2XVFCqsqt1XKr5IzrcJdhvExW7V/eKwkOi1NSOT/0xb4ALBArxyi0RWJoxKOItimehG+9bdxrR0oHPoNVqQaF+zg4cxrnl0GyO1SH4drAQaK+kyXxii/lgb9DtrenTVIGijkszLFqhn8S2iGD/TM0fw6GpsofImVbFqtVMxXvGChYHIo/54hfWlUmF2ecXoqa3x1snFM+WcwPs0oCd3AaFjTO9GilWHkjXoJGSvip5AqcQwW0VHq0ZTrOe4G8b5Wn63EIi5JcyOxisa/I1zrQ0b68ewzXUKauULZyaF+ihh6W/NWGCGfDl/xWzTNy9wUcO1ACuAF2JBGTfwfIkhWkiPnhX7El7DudKJ2Ywc7g4dqJ3BvlCMFLhBDBsAaAAGx+bg0Dg/fEOw3TkisJnbUxOyCKQ0iV0BnomnemyqkbVugu4oDgDwBDX7JoWkURYEHC6IlChE2QG0tLaXLu1LZKvE00OVAUcHhuBnNCMlhk8uW73pTq4jOm3LhWK62LtuW1KApSXcCc3oDAZ1dc99alu/zFbywMQ5pLqwSqsEYqcRLG0sUpPMXb89+v/pf/2Q==" alt="D'Lauras" style="width:44px;height:44px;border-radius:10px;object-fit:cover;"/>
+        <div>
+          <div style="font-family:'Playfair Display',serif;font-weight:700;color:#fff;font-size:1.1rem;">D'Lauras</div>
+          <div style="font-size:.6rem;color:#7aa348;letter-spacing:.25em;text-transform:uppercase;">Móveis Planejados</div>
+        </div>
+      </div>
+      <p style="color:rgba(255,255,255,0.35);font-size:.85rem;line-height:1.8;max-width:280px;margin-bottom:20px;">
+        Desde 1995 transformando ambientes com móveis planejados de alta qualidade e excelência em Palmas – TO.
+      </p>
+      <div style="display:flex;gap:10px;">
+        <a href="#" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(122,163,72,0.25);display:flex;align-items:center;justify-content:center;transition:all .25s;" onmouseover="this.style.background='#44532A'" onmouseout="this.style.background='transparent'">
+          <i data-lucide="instagram" style="width:15px;height:15px;color:rgba(255,255,255,0.5);"></i>
+        </a>
+        <a href="#" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(122,163,72,0.25);display:flex;align-items:center;justify-content:center;transition:all .25s;" onmouseover="this.style.background='#44532A'" onmouseout="this.style.background='transparent'">
+          <i data-lucide="facebook" style="width:15px;height:15px;color:rgba(255,255,255,0.5);"></i>
+        </a>
+        <a href="https://wa.me/556392117264" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(122,163,72,0.25);display:flex;align-items:center;justify-content:center;transition:all .25s;" onmouseover="this.style.background='#1a7a32'" onmouseout="this.style.background='transparent'">
+          <svg style="width:15px;height:15px;fill:rgba(255,255,255,0.5);" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.553 4.112 1.515 5.842L0 24l6.335-1.485A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.003-1.369l-.36-.213-3.72.873.937-3.617-.235-.375A9.818 9.818 0 1112 21.818z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1rem;margin-bottom:16px;">Navegação</h4>
+      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
+        <li><a href="#hero"         style="color:rgba(255,255,255,0.35);font-size:.82rem;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#9cbd6e'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Home</a></li>
+        <li><a href="#about"        style="color:rgba(255,255,255,0.35);font-size:.82rem;text-decoration:none;" onmouseover="this.style.color='#9cbd6e'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Quem Somos</a></li>
+        <li><a href="#services"     style="color:rgba(255,255,255,0.35);font-size:.82rem;text-decoration:none;" onmouseover="this.style.color='#9cbd6e'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Serviços</a></li>
+        <li><a href="#portfolio"    style="color:rgba(255,255,255,0.35);font-size:.82rem;text-decoration:none;" onmouseover="this.style.color='#9cbd6e'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Portfólio</a></li>
+        <li><a href="#testimonials" style="color:rgba(255,255,255,0.35);font-size:.82rem;text-decoration:none;" onmouseover="this.style.color='#9cbd6e'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Depoimentos</a></li>
+        <li><a href="#team"         style="color:rgba(255,255,255,0.35);font-size:.82rem;text-decoration:none;" onmouseover="this.style.color='#9cbd6e'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Equipe</a></li>
+        <li><a href="#contact"      style="color:rgba(255,255,255,0.35);font-size:.82rem;text-decoration:none;" onmouseover="this.style.color='#9cbd6e'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Contato</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 style="font-family:'Playfair Display',serif;color:#fff;font-size:1rem;margin-bottom:16px;">Contato</h4>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:flex-start;gap:8px;">
+          <i data-lucide="map-pin" style="width:14px;height:14px;color:#7aa348;flex-shrink:0;margin-top:2px;"></i>
+          <span style="color:rgba(255,255,255,0.35);font-size:.8rem;">903 Sul, Al. 19, QD 14<br/>Palmas – TO</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <i data-lucide="phone" style="width:14px;height:14px;color:#7aa348;flex-shrink:0;"></i>
+          <a href="https://wa.me/556392117264" style="color:rgba(255,255,255,0.35);font-size:.8rem;text-decoration:none;">(63) 9 9211-7264</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <i data-lucide="mail" style="width:14px;height:14px;color:#7aa348;flex-shrink:0;"></i>
+          <a href="mailto:contato@dlaurasmoveis.com.br" style="color:rgba(255,255,255,0.35);font-size:.8rem;text-decoration:none;">contato@dlaurasmoveis.com.br</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <i data-lucide="clock" style="width:14px;height:14px;color:#7aa348;flex-shrink:0;"></i>
+          <span style="color:rgba(255,255,255,0.35);font-size:.8rem;">Seg–Sex 8h–18h | Sáb 8h–12h</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="border-top:1px solid rgba(255,255,255,0.06);padding:16px 0;">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-2">
+      <span style="font-size:.75rem;color:rgba(255,255,255,0.2);">© 2024 D'Lauras Móveis Planejados — Morais & Silva Ltda. Todos os direitos reservados.</span>
+      <span style="font-size:.72rem;color:rgba(255,255,255,0.12);">Palmas, Tocantins – Brasil</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- WhatsApp FAB -->
+<a href="https://wa.me/556392117264" target="_blank" class="wa-btn"
+   style="position:fixed;bottom:24px;right:24px;z-index:99;width:54px;height:54px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);transition:transform .25s;"
+   onmouseover="this.style.transform='scale(1.12)'" onmouseout="this.style.transform='scale(1)'">
+  <svg style="width:26px;height:26px;fill:#fff;" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.553 4.112 1.515 5.842L0 24l6.335-1.485A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.003-1.369l-.36-.213-3.72.873.937-3.617-.235-.375A9.818 9.818 0 1112 21.818z"/></svg>
+</a>
+
+<!-- Back to top -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+  style="position:fixed;bottom:88px;right:24px;z-index:99;width:40px;height:40px;background:#44532A;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(68,83,42,0.5);">
+  <i data-lucide="arrow-up" style="width:18px;height:18px;color:#fff;"></i>
+</button>
+
+
+<script>
+  // Icons
+  lucide.createIcons();
+
+  // Navbar
+  const nav = document.getElementById('topnav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('solid', window.scrollY > 50);
+    document.getElementById('btt').classList.toggle('show', window.scrollY > 400);
+  });
+
+  // Mobile menu
+  document.getElementById('mobileBtn').onclick = () =>
+    document.getElementById('mobileDrop').classList.toggle('hidden');
+  function mclose() { document.getElementById('mobileDrop').classList.add('hidden'); }
+
+  // Reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Portfolio filter
+  document.getElementById('filterRow').addEventListener('click', e => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.f;
+    document.querySelectorAll('[data-pc]').forEach(el => {
+      el.style.display = (f === 'all' || el.dataset.pc === f) ? '' : 'none';
+    });
+  });
+
+  // Testimonial slider
+  const track = document.getElementById('tTrack');
+  const slides = track.querySelectorAll('.tslide');
+  const dots = document.getElementById('tDots');
+  let cur = 0, timer;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'tdot' + (i===0 ? ' active' : '');
+    d.onclick = () => { goto(i); reset(); };
+    dots.appendChild(d);
+  });
+
+  function goto(n) {
+    cur = (n + slides.length) % slides.length;
+    track.style.transform = `translateX(-${cur * 100}%)`;
+    dots.querySelectorAll('.tdot').forEach((d,i) => d.classList.toggle('active', i===cur));
+  }
+  function reset() { clearInterval(timer); timer = setInterval(() => goto(cur+1), 5000); }
+
+  document.getElementById('tPrev').onclick = () => { goto(cur-1); reset(); };
+  document.getElementById('tNext').onclick = () => { goto(cur+1); reset(); };
+  reset();
+
+  // Form
+  document.getElementById('cForm').addEventListener('submit', () => {
+    const s = document.getElementById('fSuccess');
+    s.style.display = 'block';
+    setTimeout(() => s.style.display = 'none', 5000);
+  });
+</script>
+
+</body>
+</html>
