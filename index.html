@@ -2687,7 +2687,7 @@
             </div>
           </div>
 
-          <!-- Formulário -->
+          <!-- Formulário — Netlify Forms (sem backend) -->
           <div
             class="reveal"
             style="
@@ -2697,23 +2697,97 @@
               padding: 32px;
             "
           >
+            <!-- ✅ Sucesso pós-envio -->
             <div
               id="fSuccess"
               style="
                 display: none;
-                background: rgba(68, 83, 42, 0.4);
-                border: 1px solid rgba(122, 163, 72, 0.5);
-                border-radius: 12px;
-                padding: 14px;
+                background: rgba(68, 83, 42, 0.35);
+                border: 1px solid rgba(122, 163, 72, 0.45);
+                border-radius: 16px;
+                padding: 28px;
                 text-align: center;
-                color: #9cbd6e;
-                font-weight: 600;
-                margin-bottom: 20px;
               "
             >
-              ✅ Mensagem enviada com sucesso! Em breve entraremos em contato.
+              <div style="font-size: 2.4rem; margin-bottom: 8px">✅</div>
+              <div
+                style="
+                  font-family: &quot;Playfair Display&quot;, serif;
+                  font-size: 1.15rem;
+                  color: #fff;
+                  font-weight: 700;
+                  margin-bottom: 6px;
+                "
+              >
+                Mensagem enviada com sucesso!
+              </div>
+              <div
+                style="
+                  font-size: 0.85rem;
+                  color: rgba(255, 255, 255, 0.5);
+                  line-height: 1.7;
+                "
+              >
+                Recebemos seu contato e retornaremos em breve.<br />Enquanto
+                isso, fale direto pelo WhatsApp:
+              </div>
+              <a
+                href="https://wa.me/556392117264"
+                target="_blank"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  margin-top: 16px;
+                  background: #25d366;
+                  color: #fff;
+                  padding: 10px 22px;
+                  border-radius: 50px;
+                  font-weight: 700;
+                  font-size: 0.85rem;
+                  text-decoration: none;
+                "
+                onmouseover="this.style.opacity = '.85'"
+                onmouseout="this.style.opacity = '1'"
+              >
+                <svg
+                  style="width: 16px; height: 16px; fill: #fff"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+                  />
+                  <path
+                    d="M12 0C5.373 0 0 5.373 0 12c0 2.122.553 4.112 1.515 5.842L0 24l6.335-1.485A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.003-1.369l-.36-.213-3.72.873.937-3.617-.235-.375A9.818 9.818 0 1112 21.818z"
+                  />
+                </svg>
+                Chamar no WhatsApp
+              </a>
             </div>
-            <form action="envia_mensagem.asp" method="post" id="cForm">
+
+            <!--
+          ╔══════════════════════════════════════════════════════════╗
+          ║  NETLIFY FORMS                                           ║
+          ║  • data-netlify="true"  → ativa a integração             ║
+          ║  • data-netlify-honeypot → filtro anti-spam              ║
+          ║  • input[name="form-name"] → identifica o form           ║
+          ║  Após deploy no Netlify:                                 ║
+          ║    Site Settings → Forms → Notifications → Add email     ║
+          ╚══════════════════════════════════════════════════════════╝
+        -->
+            <form
+              id="cForm"
+              name="orcamento"
+              method="POST"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+            >
+              <!-- Campos ocultos obrigatórios -->
+              <input type="hidden" name="form-name" value="orcamento" />
+              <p style="display: none">
+                <label>Não preencha: <input name="bot-field" /></label>
+              </p>
+
               <div class="grid sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <label
@@ -2767,11 +2841,11 @@
                       text-transform: uppercase;
                       margin-bottom: 8px;
                     "
-                    >Telefone *</label
+                    >Telefone / WhatsApp *</label
                   >
                   <input
                     type="tel"
-                    name="Telefone"
+                    name="telefone"
                     placeholder="(63) 9 0000-0000"
                     required
                     class="form-input"
@@ -2789,7 +2863,7 @@
                     "
                     >Ambiente</label
                   >
-                  <select name="assunto" class="form-input">
+                  <select name="ambiente" class="form-input">
                     <option value="">Selecione...</option>
                     <option>Cozinha</option>
                     <option>Quarto / Closet</option>
@@ -2821,8 +2895,24 @@
                   style="resize: none"
                 ></textarea>
               </div>
+
+              <!-- Estado enviando -->
+              <div
+                id="fSending"
+                style="
+                  display: none;
+                  text-align: center;
+                  color: rgba(255, 255, 255, 0.5);
+                  font-size: 0.85rem;
+                  margin-bottom: 12px;
+                "
+              >
+                ⏳ Enviando sua mensagem...
+              </div>
+
               <button
                 type="submit"
+                id="fBtn"
                 style="
                   width: 100%;
                   background: #44532a;
@@ -3364,12 +3454,50 @@
       };
       reset();
 
-      // Form submit feedback
-      document.getElementById("cForm").addEventListener("submit", () => {
-        const s = document.getElementById("fSuccess");
-        s.style.display = "block";
-        setTimeout(() => (s.style.display = "none"), 5000);
-      });
+      // ── Netlify Forms — envio via fetch (sem reload) ──────────
+      const cForm = document.getElementById("cForm");
+      const fSuccess = document.getElementById("fSuccess");
+      const fSending = document.getElementById("fSending");
+      const fBtn = document.getElementById("fBtn");
+
+      if (cForm) {
+        cForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          fBtn.disabled = true;
+          fBtn.textContent = "Enviando…";
+          if (fSending) fSending.style.display = "block";
+
+          try {
+            const res = await fetch("/", {
+              method: "POST",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: new URLSearchParams(new FormData(cForm)).toString(),
+            });
+
+            if (res.ok) {
+              cForm.style.display = "none";
+              if (fSending) fSending.style.display = "none";
+              if (fSuccess) fSuccess.style.display = "block";
+              // Scroll suave até a mensagem de sucesso
+              fSuccess &&
+                fSuccess.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
+            } else {
+              throw new Error("server error");
+            }
+          } catch {
+            if (fSending) fSending.style.display = "none";
+            fBtn.disabled = false;
+            fBtn.textContent = "Enviar Mensagem →";
+            alert(
+              "Erro ao enviar. Fale diretamente pelo WhatsApp: (63) 9 9211-7264",
+            );
+          }
+        });
+      }
 
       // ── Active nav section highlight ─────────────────────────
       const navLinks = document.querySelectorAll('#topnav nav a[href^="#"]');
