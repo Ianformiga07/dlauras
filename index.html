@@ -2687,7 +2687,7 @@
             </div>
           </div>
 
-          <!-- Formulário — Netlify Forms (sem backend) -->
+          <!-- Formulário — Web3Forms (gratuito, entrega no email sem backend) -->
           <div
             class="reveal"
             style="
@@ -2766,27 +2766,35 @@
             </div>
 
             <!--
-          ╔══════════════════════════════════════════════════════════╗
-          ║  NETLIFY FORMS                                           ║
-          ║  • data-netlify="true"  → ativa a integração             ║
-          ║  • data-netlify-honeypot → filtro anti-spam              ║
-          ║  • input[name="form-name"] → identifica o form           ║
-          ║  Após deploy no Netlify:                                 ║
-          ║    Site Settings → Forms → Notifications → Add email     ║
-          ╚══════════════════════════════════════════════════════════╝
+          ╔══════════════════════════════════════════════════════════════╗
+          ║  WEB3FORMS — 100% gratuito, sem backend                      ║
+          ║  Passos para ativar:                                         ║
+          ║  1. Acesse https://web3forms.com                             ║
+          ║  2. Digite o email da empresa e clique em "Create Access Key" ║
+          ║  3. Copie a chave gerada                                     ║
+          ║  4. Cole no input[name="access_key"] abaixo                  ║
+          ║  Pronto — cada envio chega no email cadastrado               ║
+          ╚══════════════════════════════════════════════════════════════╝
         -->
             <form
               id="cForm"
-              name="orcamento"
+              action="https://api.web3forms.com/submit"
               method="POST"
-              netlify
-              netlify-honeypot="bot-field"
             >
-              <!-- Campos ocultos obrigatórios -->
-              <input type="hidden" name="form-name" value="orcamento" />
-              <p style="display: none">
-                <label>Não preencha: <input name="bot-field" /></label>
-              </p>
+              <!-- ⚠️ SUBSTITUA o value abaixo pela sua chave do web3forms.com -->
+              <input type="hidden" name="access_key" value="SUA_CHAVE_AQUI" />
+
+              <!-- Configurações do email recebido -->
+              <input
+                type="hidden"
+                name="subject"
+                value="Novo orçamento — D'Lauras Móveis Planejados"
+              />
+              <input type="hidden" name="from_name" value="Site D'Lauras" />
+              <input type="hidden" name="redirect" value="false" />
+
+              <!-- Honeypot anti-spam -->
+              <input type="checkbox" name="botcheck" style="display: none" />
 
               <div class="grid sm:grid-cols-2 gap-4 mb-4">
                 <div>
@@ -2896,7 +2904,6 @@
                 ></textarea>
               </div>
 
-              <!-- Estado enviando -->
               <div
                 id="fSending"
                 style="
@@ -3454,7 +3461,7 @@
       };
       reset();
 
-      // ── Netlify Forms — envio via fetch (sem reload) ──────────
+      // ── Web3Forms — envio via fetch, sem backend, 100% gratuito ─
       const cForm = document.getElementById("cForm");
       const fSuccess = document.getElementById("fSuccess");
       const fSending = document.getElementById("fSending");
@@ -3464,36 +3471,51 @@
         cForm.addEventListener("submit", async (e) => {
           e.preventDefault();
 
+          // Avisa se a chave ainda não foi configurada
+          const accessKey = cForm.querySelector('[name="access_key"]').value;
+          if (!accessKey || accessKey === "SUA_CHAVE_AQUI") {
+            alert(
+              "⚠️ Configure sua chave do Web3Forms no código (access_key) antes de testar.",
+            );
+            return;
+          }
+
           fBtn.disabled = true;
           fBtn.textContent = "Enviando…";
           if (fSending) fSending.style.display = "block";
 
           try {
-            const res = await fetch("/", {
+            const res = await fetch("https://api.web3forms.com/submit", {
               method: "POST",
-              headers: { "Content-Type": "application/x-www-form-urlencoded" },
-              body: new URLSearchParams(new FormData(cForm)).toString(),
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify(Object.fromEntries(new FormData(cForm))),
             });
+            const data = await res.json();
 
-            if (res.ok) {
+            if (data.success) {
               cForm.style.display = "none";
               if (fSending) fSending.style.display = "none";
-              if (fSuccess) fSuccess.style.display = "block";
-              // Scroll suave até a mensagem de sucesso
-              fSuccess &&
+              if (fSuccess) {
+                fSuccess.style.display = "block";
                 fSuccess.scrollIntoView({
                   behavior: "smooth",
                   block: "center",
                 });
+              }
             } else {
-              throw new Error("server error");
+              throw new Error(data.message || "Erro desconhecido");
             }
-          } catch {
+          } catch (err) {
             if (fSending) fSending.style.display = "none";
             fBtn.disabled = false;
             fBtn.textContent = "Enviar Mensagem →";
             alert(
-              "Erro ao enviar. Fale diretamente pelo WhatsApp: (63) 9 9211-7264",
+              "Erro ao enviar: " +
+                err.message +
+                "\nFale pelo WhatsApp: (63) 9 9211-7264",
             );
           }
         });
